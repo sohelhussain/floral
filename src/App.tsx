@@ -2,13 +2,46 @@ import Nav from "./components/Nav"
 import vase from "./assets/image/vase.png";
 import voyage2 from "./assets/fonts/voyage-regular.otf"
 import LocomotiveScroll from "locomotive-scroll";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef } from "react";
+import { ScrollTrigger } from "gsap/all";
 
 function App() {
 
   new LocomotiveScroll();
 
+  const imageRef = useRef(null);
+  const mainRef = useRef(null);
+
+
+  gsap.registerPlugin(ScrollTrigger)
+
+
+  
+  useGSAP(()=>{
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: mainRef.current,
+        markers:true,
+        start: "top 0",
+        end: "top -200%",
+        scrub: 1
+      }
+    });
+
+    tl.to(imageRef.current,{
+      transform: "translateY(-20%)",
+      duration:1
+    })
+    tl.to(imageRef.current, {
+      transform:" translateY(-20%) scale(0.7)",
+      duration:1
+    })
+  })
+
   return (
-    <div className="w-full min-h-screen  bg-[#ff8676] text-amber-50">
+    <div ref={mainRef} className="w-full min-h-screen  bg-[#ff8676] text-amber-50">
       <Nav />
       <div id="center" className="relative pb-[10vw] pt-[14vw] px-[8vw] font-[voyage]">
         <div id="center-text" className="flex justify-between  tracking-tighter">
@@ -35,7 +68,7 @@ function App() {
             </div>
           </div>
         </div>
-        <img src={vase} className="absolute top-0 h-[80vw]" alt="" />
+        <img ref={imageRef} src={vase} className="fixed top-0 h-[80vw]" alt="" />
       </div>
     </div>
   )
