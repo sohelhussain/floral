@@ -1,8 +1,11 @@
 import Nav from "./components/Nav"
 import vase from "./assets/image/vase.png";
 import voyage2 from "./assets/fonts/voyage-regular.otf"
+import LocomotiveScroll from "locomotive-scroll";
 
 function App() {
+
+  new LocomotiveScroll();
 
   return (
     <div className="w-full min-h-screen  bg-[#ff8676] text-amber-50">
